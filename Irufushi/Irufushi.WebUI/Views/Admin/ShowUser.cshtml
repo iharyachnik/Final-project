@@ -5,3 +5,51 @@
 }
 
 <h2>ShowUser</h2>
+
+<table>
+    <tr>
+        <td>@Model.UserId</td>
+        <td>@Model.UserName</td>
+    </tr>
+    <tr>
+        <td>@Model.AboutUser.FirstName</td>
+        <td>@Model.AboutUser.LastName</td>
+        блаблабла
+    </tr>
+    @foreach (var item in Model.Senders)
+    {
+
+        <div class="form-group form-inline ">
+            <ul>
+                <li>
+                    @(item.Sender.AboutUser.FirstName == null ? "" : item.Sender.AboutUser.FirstName)
+                </li>
+                <li>
+                    @item.Content
+                </li>
+                <li>
+                    @item.SendDateTime
+                </li>
+            </ul>
+        </div>
+
+    }
+    @foreach (var item in Model.Receivers)
+    {
+
+        <div class="form-group form-inline ">
+            <ul>
+                <li>
+                    @(item.Sender.AboutUser.FirstName == null ? "" : item.Sender.AboutUser.FirstName)
+                </li>
+                <li>
+                    @item.Content
+                </li>
+                <li>
+                    @item.SendDateTime
+                </li>
+            </ul>
+        </div>
+
+    }
+</table>

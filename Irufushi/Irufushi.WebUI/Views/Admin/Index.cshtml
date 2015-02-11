@@ -10,9 +10,8 @@
     {
         <tr>
         <td>@item.UserId</td>
-        <td>@item.UserName</td>
+        <td>@Html.ActionLink(item.UserName, "ShowUser", "Admin",
+            new { id = item.UserId }, null)</td>
             </tr>
     }
-    @*@Html.ActionLink("Add to friends", "AddFriend", "User",
-            new { id = item.UserId }, null)*@
 </table>
