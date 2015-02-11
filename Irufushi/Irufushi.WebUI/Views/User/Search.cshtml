@@ -1,0 +1,87 @@
+﻿@model Irufushi.WebUI.Models.SearchModel
+
+
+@using (Html.BeginForm())
+{ 
+<fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
+    <div class="form-group form-inline">
+        @Html.LabelFor(model => model.FirstName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @id = "FirstName" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-inline">
+        @Html.LabelFor(model => model.LastName, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @id = "LastName" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-inline">
+        @Html.LabelFor(model => model.Country, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @id = "Country" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-inline">
+        @Html.LabelFor(model => model.City, new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.City, new { @class = "form-control", @id = "City" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" class="btn btn-primary btn-login" id="SubmitBtn" value="Search" />
+        </div>
+    </div>
+
+</fieldset>
+
+<fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
+    @foreach (var item in Model.Users)
+    {
+
+        <div class="form-group form-inline">
+            <div class="list-group">
+                <ul>
+                    <li>
+                        @Html.ActionLink(item.AboutUser.FirstName + " " + item.AboutUser.LastName,
+        "Index", "User", new { id = item.UserId }, null)
+                    </li>
+                    <li>
+                        @(item.Location.Country == null ? "" : item.Location.Country)
+                        @(item.Location.City == null ? "" : item.Location.City)
+                    </li>
+                    <li>
+                        @Html.ActionLink("Add to friends", "AddFriend", "User",
+            new { id = item.UserId }, null)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    }
+
+
+
+</fieldset>
+}
+        @*@Html.ActionLink(item.AboutUser.FirstName + " " + item.AboutUser.LastName,
+            "Index", "User", new { id = item.UserId }, null)
+
+
+                @Html.ActionLink("Add to friends", "AddFriend", "User",
+            new { id = item.UserId }, null)*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+                    

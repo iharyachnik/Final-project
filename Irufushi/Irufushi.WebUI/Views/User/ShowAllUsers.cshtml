@@ -1,0 +1,13 @@
+﻿@model Irufushi.WebUI.Models.UserModel
+
+<fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
+    @foreach (var item in Model.Users)
+    {
+
+        <div class="form-group form-inline">
+            @Html.ActionLink((item.AboutUser.FirstName + " " + item.AboutUser.LastName).ToString(),
+        "Index", "User", new { id = item.UserId }, null)
+        </div>
+
+    }
+</fieldset>
