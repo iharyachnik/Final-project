@@ -20,7 +20,12 @@ namespace Irufushi.WebUI.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private readonly IUserPagesRepository _repository;
 
+        public AccountController(IUserPagesRepository userRepository)
+        {
+            _repository = userRepository;
+        }
         //
         // GET: /Account/Login
 
@@ -86,6 +91,7 @@ namespace Irufushi.WebUI.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
+                    _repository.SetRole(WebSecurity.GetUserId(model.UserName));
                     return RedirectToAction("Edit", "User", new { id = WebSecurity.GetUserId(model.UserName) });
                 }
                 catch (MembershipCreateUserException e)

@@ -13,6 +13,7 @@ namespace Irufushi.Domain.Concrete
     {
         EFDBContext context = new EFDBContext();
 
+
         public IQueryable<UserProfile> UserProfiles
         {
             get { return context.UserProfiles; }
@@ -312,6 +313,30 @@ namespace Irufushi.Domain.Concrete
                 return;
 
             context.Messages.Add(message);
+            context.SaveChanges();
+        }
+
+        public void AddRoles()
+        {
+            webpages_Roles roleAdmin = new webpages_Roles();
+            webpages_Roles roleUser = new webpages_Roles();
+
+            roleAdmin.RoleName = "Admin";
+            roleUser.RoleName = "User";
+            context.webpages_Roles.Add(roleAdmin);
+            context.webpages_Roles.Add(roleUser);
+
+            context.SaveChanges();
+        }
+
+        public void SetRole(int id)
+        {
+            webpages_UsersInRoles userRole = new webpages_UsersInRoles();
+
+            userRole.Role = context.webpages_Roles.Where(x => x.RoleName == "User").FirstOrDefault();
+            userRole.UserId = id;
+
+            context.webpages_UsersInRoles.Add(userRole);
             context.SaveChanges();
         }
     }

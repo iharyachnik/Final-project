@@ -58,6 +58,7 @@
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Entities\webpages_Roles.cs" />
+    <Compile Include="Entities\webpages_UsersInRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

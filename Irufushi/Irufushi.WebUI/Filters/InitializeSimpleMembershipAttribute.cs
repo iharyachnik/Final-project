@@ -7,6 +7,7 @@ using WebMatrix.WebData;
 using Irufushi.WebUI.Models;
 using Abstract.Entities;
 using Irufushi.Domain.Concrete;
+using Abstract.Abstract;
 
 namespace Irufushi.WebUI.Filters
 {
@@ -41,6 +42,8 @@ namespace Irufushi.WebUI.Filters
                     }
 
                     WebSecurity.InitializeDatabaseConnection("IFDB", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    IUserPagesRepository repo = new IFDBUserRepository();
+                    repo.AddRoles();
                 }
                 catch (Exception ex)
                 {

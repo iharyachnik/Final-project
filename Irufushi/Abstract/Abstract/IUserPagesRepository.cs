@@ -27,5 +27,7 @@ namespace Abstract.Abstract
 
         List<AboutUser> GetDialogs(int id);
         void AddMessage(Message message);
+        void AddRoles();
+        void SetRole(int id);
     }
 }

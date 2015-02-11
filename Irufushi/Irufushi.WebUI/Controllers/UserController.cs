@@ -14,13 +14,15 @@ namespace Irufushi.WebUI.Controllers
     public class UserController : Controller
     {
         private readonly IUserPagesRepository _repository;
-        //
-        // GET: /User/
+
 
         public UserController(IUserPagesRepository userRepository)
         {
             _repository = userRepository;
         }
+
+        //
+        // GET: /User/
 
         [Authorize]
         public ActionResult Index(int? id)
@@ -125,6 +127,7 @@ namespace Irufushi.WebUI.Controllers
             {
                 Users = _repository.SearchUsers(null, null, null, null)
             };
+            model.Users = model.Users.Where(x => x.UserId != WebSecurity.CurrentUserId);
 
             return View(model);
         }
@@ -135,6 +138,8 @@ namespace Irufushi.WebUI.Controllers
         {
             model.Users = _repository.SearchUsers(model.FirstName, model.LastName, 
                 model.Country, model.City);
+
+            model.Users = model.Users.Where(x => x.UserId != WebSecurity.CurrentUserId);
 
             return View(model);
         }

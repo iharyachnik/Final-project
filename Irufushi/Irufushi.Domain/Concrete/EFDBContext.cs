@@ -24,7 +24,8 @@ namespace Irufushi.Domain.Concrete
         public DbSet<Location> Locations { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Photo> Photo { get; set; }
-
+        public DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public DbSet<webpages_UsersInRoles> webpages_UsersInRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
