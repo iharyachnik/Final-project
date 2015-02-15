@@ -23,7 +23,6 @@ namespace Abstract.Entities
         [MaxLength(50)]
         public string Skype { get; set; }
 
-        [DataType(DataType.EmailAddress)]
         public string ContEmail { get; set; }
 
         [MaxLength(50)]

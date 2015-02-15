@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Irufushi.WebUI.Models;
 using Abstract.Abstract;
 using Abstract.Entities;
+using WebMatrix.WebData;
 
 namespace Irufushi.WebUI.Controllers
 {
@@ -17,10 +18,8 @@ namespace Irufushi.WebUI.Controllers
         {
             _repository = userRepository;
         }
-        //
-        // GET: /Admin/
 
-        [Authorize(Roles="Admin")]
+        //[Authorize(Roles="Admin")]
         public ActionResult Index()
         {
             UserModel viewModel = new UserModel
@@ -31,11 +30,11 @@ namespace Irufushi.WebUI.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles="Admin")]
+        //[Authorize(Roles="Admin")]
         public ActionResult ShowUser(int? id)
         {
-            UserProfile viewModel = new UserProfile();
-            if(id != null) viewModel = _repository.GetUser((int)id);
+            if (id != null) id = WebSecurity.CurrentUserId;
+            UserProfile viewModel = _repository.GetUser((int)id);
 
             return View(viewModel);
         }

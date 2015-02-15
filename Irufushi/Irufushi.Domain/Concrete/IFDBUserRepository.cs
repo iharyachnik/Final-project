@@ -13,7 +13,6 @@ namespace Irufushi.Domain.Concrete
     {
         EFDBContext context = new EFDBContext();
 
-
         public IQueryable<UserProfile> UserProfiles
         {
             get { return context.UserProfiles; }
@@ -26,11 +25,7 @@ namespace Irufushi.Domain.Concrete
 
         public UserProfile GetUser(int id)
         {
-            UserProfile User;
-
-            User = context.UserProfiles.First(m => m.UserId == id);
-
-            return User;
+            return context.UserProfiles.First(m => m.UserId == id);
         }
 
         public void SaveProfile(UserProfile user)
@@ -205,9 +200,10 @@ namespace Irufushi.Domain.Concrete
         public List<UserProfile> SearchUsers(string firstName, string lastName,
             string country, string city)
         {
-            var req = false;
-            var and = false;
+            bool req = false;
+            bool and = false;
             string searchRequest = "Select UserId from UserProfile";
+            string searchPattern = string.Empty;
 
             if (firstName != null || lastName != null)
             {
@@ -227,28 +223,28 @@ namespace Irufushi.Domain.Concrete
                  
             if (firstName != null)
             {
-                var searchPattern = "AboutUsers.FirstName LIKE '%" + firstName + "%'";
+                searchPattern = "AboutUsers.FirstName LIKE '%" + firstName + "%'";
                 searchRequest += searchPattern;
                 and = true;
             }
             if (lastName != null)
             {
                 if (and) searchRequest += " and ";
-                var searchPattern = "AboutUsers.LastName LIKE '%" + lastName + "%'";
+                searchPattern = "AboutUsers.LastName LIKE '%" + lastName + "%'";
                 searchRequest += searchPattern;
                 and = true;
             }
             if (country != null)
             {
                 if (and) searchRequest += " and ";
-                var searchPattern = "Locations.Country LIKE '%" + country + "%'";
+                searchPattern = "Locations.Country LIKE '%" + country + "%'";
                 searchRequest += searchPattern;
                 and = true;
             }
             if (city != null)
             {
                 if (and) searchRequest += " and ";
-                var searchPattern = "Locations.City LIKE '%" + city + "%'";
+                searchPattern = "Locations.City LIKE '%" + city + "%'";
                 searchRequest += searchPattern;
             }
 
@@ -308,8 +304,8 @@ namespace Irufushi.Domain.Concrete
 
         public void AddMessage(Message message)
         {
-            if (message.Content == null && message.SenderId == 0
-                && message.ReceiverId == 0)
+            if (message.Content == null || message.SenderId == 0
+                || message.ReceiverId == 0)
                 return;
 
             context.Messages.Add(message);
@@ -323,6 +319,10 @@ namespace Irufushi.Domain.Concrete
 
             roleAdmin.RoleName = "Admin";
             roleUser.RoleName = "User";
+
+            if (context.webpages_Roles.Where(x => x.RoleName == "Admin").First() != null)
+                return;
+
             context.webpages_Roles.Add(roleAdmin);
             context.webpages_Roles.Add(roleUser);
 

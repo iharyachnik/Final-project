@@ -8,29 +8,12 @@ using System.Web.Security;
 
 namespace Irufushi.WebUI.Models
 {
-    //public class UsersContext : DbContext
-    //{
-    //    public UsersContext()
-    //        : base("DefaultConnection")
-    //    {
-    //    }
-
-    //    public DbSet<UserProfile> UserProfiles { get; set; }
-    //}
-
-    //[Table("UserProfile")]
-    //public class UserProfile
-    //{
-    //    [Key]
-    //    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-    //    public int UserId { get; set; }
-    //    public string UserName { get; set; }
-    //}
-
     public class RegisterExternalLoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}"
+            , ErrorMessage = "Incorrect email")]
         public string UserName { get; set; }
 
         public string ExternalLoginData { get; set; }
@@ -44,7 +27,8 @@ namespace Irufushi.WebUI.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long."
+            , MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
@@ -58,7 +42,9 @@ namespace Irufushi.WebUI.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}"
+            , ErrorMessage = "Incorrect email")]
         public string UserName { get; set; }
 
         [Required]
@@ -74,10 +60,13 @@ namespace Irufushi.WebUI.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}"
+            , ErrorMessage = "Incorrect email")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long."
+            , MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

@@ -1,123 +1,198 @@
 ﻿@model Abstract.Entities.UserProfile
 
-@{
-    ViewBag.Title = "Edit Profile";
-}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+            <h2>Edit Profile</h2>
+            <hr />
+        </div>
+    </div>
+</div>
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
-<p class="message-success">@ViewBag.StatusMessage</p>
-
-<p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
-
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
-{    
-    <fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.AboutUser.FirstName, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.AboutUser.FirstName, new { @class = "form-control", @id = "FirstName" })
+@using (Html.BeginForm())
+{
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.AboutUser.FirstName)
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.AboutUser.FirstName)
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.AboutUser.LastName, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.AboutUser.LastName, new { @class = "form-control", @id = "LastName" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.AboutUser.LastName)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.AboutUser.LastName)
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.AboutUser.BirthDate, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.EditorFor(m => m.AboutUser.BirthDate, new { @class = "form-control", @id = "BirthDate" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.AboutUser.BirthDate)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.AboutUser.BirthDate)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.Label("Are you man?", new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.EditorFor(m => m.AboutUser.Gender, new { @class = "form-control", @id = "Gender" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.AboutUser.Gender)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.AboutUser.Gender)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.Label("Phone number", new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Contacts.PhoneNum, new { @class = "form-control", @id = "PhoneNum" })
+        <hr />
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.Location.Country)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.DisplayFor(m => m.Location.Country)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.Label("Mobile phone number", new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Contacts.MobPhoneNum, new { @class = "form-control", @id = "MobPhoneNum" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.Location.City)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Location.City)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.Contacts.Skype, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Contacts.Skype, new { @class = "form-control", @id = "Skype" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.Location.Address)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Location.Address)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.Label("Contact email", new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Contacts.ContEmail, new { @class = "form-control", @id = "ContEmail" })
+        <hr />
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.Contacts.ContEmail)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Contacts.ContEmail)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.Contacts.ICQ, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Contacts.ICQ, new { @class = "form-control", @id = "ICQ" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.Label("Phone number")
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Contacts.PhoneNum)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.Location.Country, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Location.Country, new { @class = "form-control", @id = "Country" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.Label("Mobile phone number")
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Contacts.PhoneNum)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.Location.City, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Location.City, new { @class = "form-control", @id = "City" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.Contacts.ICQ)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Contacts.ICQ)
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="form-group form-inline">
-            @Html.LabelFor(m => m.Location.Address, new { @class = "col-sm-2 control-label" })
-            <div class="col-sm-10">
-                <div class="input-group">
-                    @Html.TextBoxFor(m => m.Location.Address, new { @class = "form-control", @id = "Address" })
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.LabelFor(m => m.Contacts.Skype)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-horizontal">
+                        @Html.TextBoxFor(m => m.Contacts.Skype)
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-primary btn-login" id="SubmitBtn" value="Save" />
+        <hr />
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-sm-offset-5 col-sm-2">
+                    <input type="submit" class="btn btn-primary btn-login" id="SubmitBtn" value="Save" />
+                </div>
             </div>
         </div>
-    </fieldset>
+    </div>
 }
 
     @section Scripts {

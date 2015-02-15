@@ -1,17 +1,35 @@
 ﻿@model Irufushi.WebUI.Models.UserModel
 
-<table>
-    <tr>
-        <th>@Html.DisplayName("id")</th>
-        <th>@Html.DisplayName("email")</th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model.Users)
-    {
-        <tr>
-        <td>@item.UserId</td>
-        <td>@Html.ActionLink(item.UserName, "ShowUser", "Admin",
-            new { id = item.UserId }, null)</td>
-            </tr>
-    }
-</table>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+            <h2>Admin Panel</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.Label("Id")
+            </div>
+            <div class="col-md-6">
+                @Html.Label("Email")
+            </div>
+        </div>
+        @foreach (var item in Model.Users)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    @item.UserId
+                </div>
+                <div class="col-md-6">
+                    @Html.ActionLink(item.UserName, "ShowUser", "Admin",
+            new { id = item.UserId }, null)
+                </div>
+            </div>
+        }
+    </div> 
+</div>

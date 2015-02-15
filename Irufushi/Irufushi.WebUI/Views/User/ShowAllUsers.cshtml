@@ -1,13 +1,25 @@
 ﻿@model Irufushi.WebUI.Models.UserModel
 
-<fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+            <h2>People</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-md-offset-3" id="users">
     @foreach (var item in Model.Users)
     {
-
-        <div class="form-group form-inline">
-            @Html.ActionLink((item.AboutUser.FirstName + " " + item.AboutUser.LastName).ToString(),
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-8">
+                    @Html.ActionLink(item.AboutUser.FirstName + " " + item.AboutUser.LastName,
         "Index", "User", new { id = item.UserId }, null)
+                </div>
+            </div>
         </div>
-
+        <br />
     }
-</fieldset>
+</div>

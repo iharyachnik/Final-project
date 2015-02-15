@@ -23,8 +23,6 @@ namespace Abstract.Abstract
         List<UserProfile> SearchUsers(string firstName, string lastName,
             string country, string city);
         List<Message> GetMessages(int uId, int fId);
-
-
         List<AboutUser> GetDialogs(int id);
         void AddMessage(Message message);
         void AddRoles();

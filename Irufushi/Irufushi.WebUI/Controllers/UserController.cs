@@ -15,31 +15,26 @@ namespace Irufushi.WebUI.Controllers
     {
         private readonly IUserPagesRepository _repository;
 
-
         public UserController(IUserPagesRepository userRepository)
         {
             _repository = userRepository;
         }
 
-        //
-        // GET: /User/
-
         [Authorize]
         public ActionResult Index(int? id)
         {
             if(id == null) id = WebSecurity.CurrentUserId;
-            UserProfile user = new UserProfile();
-            
-            user = _repository.GetUser((int)id);
+            UserProfile user = _repository.GetUser((int)id);
 
             if (id != WebSecurity.CurrentUserId)
             {
-                ViewBag.Id = id;
                 ViewBag.Button = true;
                 if (_repository.IsFriend(WebSecurity.CurrentUserId, (int)id))
                     ViewBag.TypeButton = false;
                 else ViewBag.TypeButton = true;
             }
+            else ViewBag.Button = false;
+
             return View(user);
         }
 
@@ -47,8 +42,8 @@ namespace Irufushi.WebUI.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null) id = WebSecurity.CurrentUserId;
-            UserProfile user = new UserProfile();
-            user = _repository.GetUser((int)id);
+            UserProfile user = _repository.GetUser((int)id);
+
             return View(user);
         }
 
@@ -70,10 +65,12 @@ namespace Irufushi.WebUI.Controllers
         [Authorize]
         public ActionResult AddFriend(int id)
         {
-            FriendShip friendship = new FriendShip();
+            FriendShip friendship = new FriendShip
+            {
+                UserId = WebSecurity.CurrentUserId,
+                FriendId = id
+            };
 
-            friendship.UserId = WebSecurity.CurrentUserId;
-            friendship.FriendId = id;
             _repository.AddFriend(friendship);
 
             return RedirectToAction("Index", "User", new { id = id });
@@ -82,10 +79,11 @@ namespace Irufushi.WebUI.Controllers
         [Authorize]
         public ActionResult DeleteFriend(int id)
         {
-            FriendShip friendship = new FriendShip();
-
-            friendship.UserId = WebSecurity.CurrentUserId;
-            friendship.FriendId = id;
+            FriendShip friendship = new FriendShip
+            {
+                UserId = WebSecurity.CurrentUserId,
+                FriendId = id
+            };
 
             _repository.DeleteFriend(friendship);
 
@@ -163,6 +161,9 @@ namespace Irufushi.WebUI.Controllers
                 Messages = _repository.GetMessages(WebSecurity.CurrentUserId, (int)id)
             };
 
+            if (Request.IsAjaxRequest())
+                return View(viewModel);
+
             return View(viewModel);
         }
 
@@ -181,21 +182,5 @@ namespace Irufushi.WebUI.Controllers
 
             return RedirectToAction("ShowMessages", "User", new { id = id });
         }
-
-        //[Authorize]
-        //[HttpPost]
-        //public ActionResult SendMessage(MessageModel model, int id)
-        //{
-        //    Message message = new Message
-        //    {
-        //        SendDateTime = DateTime.Now,
-        //        SenderId = WebSecurity.CurrentUserId,
-        //        ReceiverId = id,
-        //        Content = model.NewMessage.Content
-        //    };
-        //    _repository.AddMessage(message);
-
-        //    return RedirectToAction("ShowMessages", "User");
-        //}
     }
 }

@@ -1,118 +1,190 @@
 ﻿@model Abstract.Entities.UserProfile
 
-
-@if (ViewBag.Button == true && Request.IsAuthenticated) 
-{ 
-    if(ViewBag.TypeButton == true)
+<div class="col-md-6 col-md-offset-3">
+    <div class="row">
+        <div class="text-center">
+            <h2>
+                @Html.DisplayFor(m => m.AboutUser.FirstName)
+                @Html.DisplayFor(m => m.AboutUser.LastName)
+            </h2>
+            <hr />
+        </div>
+    </div>
+    @if (ViewBag.Button == true && Request.IsAuthenticated)
     {
-        @Html.ActionLink("Add to friends", "AddFriend", "User", 
+        <div class="row">
+            <div class="col-md-6" id="button">
+                @if (ViewBag.TypeButton == true)
+                {
+                    @*@Ajax.ActionLink("Add to friends", "AddFriend", "User",
+                    new AjaxOptions
+                 {
+                     UpdateTargetId="button",
+                 })*@
+                    @Html.ActionLink("Add to friends", "AddFriend", "User", 
         new { id = this.ViewContext.RouteData.Values["id"] }, null)
+                }
+                else
+                {
+                    @*@Ajax.ActionLink("Delete from friends", "DeleteFriend", "User",
+                    new AjaxOptions
+                 {
+                     UpdateTargetId="button",
+                 })*@
+                    @Html.ActionLink("Delete from friends", "DeleteFriend", "User", 
+        new { id = this.ViewContext.RouteData.Values["id"] }, null)
+                }
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink("Send Message", "ShowMessages", "User",
+        new { id = this.ViewContext.RouteData.Values["id"] }, null)
+            </div>
+        </div>
+        <hr />
     }
-    else
-    {
-        @Html.ActionLink("Delete from friends", "DeleteFriend", "User", 
-        new { id = this.ViewContext.RouteData.Values["id"] }, null)
-    }
-    
-    @Html.ActionLink("Send Message", "ShowMessages", "User", 
-        new { id = this.ViewContext.RouteData.Values["id"] }, null)
-}
+</div>
 
-<fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.AboutUser.FirstName, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.AboutUser.FirstName)
+<div class="col-md-6 col-md-offset-3">
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.AboutUser.BirthDate)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.AboutUser.BirthDate)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.AboutUser.LastName, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.AboutUser.LastName)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.AboutUser.Gender)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.AboutUser.Gender)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.AboutUser.BirthDate, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.AboutUser.BirthDate)
+    <hr />
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.Location.Country)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Location.Country)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.Label("Are you man?", new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.AboutUser.Gender)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.Location.City)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Location.City)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.Label("Phone number", new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Contacts.PhoneNum)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.Location.Address)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Location.Address)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.Label("Mobile phone number", new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Contacts.MobPhoneNum)
+    <hr />
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.Contacts.ContEmail)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Contacts.ContEmail)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.Contacts.Skype, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Contacts.Skype)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.Label("Phone number")
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Contacts.PhoneNum)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.Label("Contact email", new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Contacts.ContEmail)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.Label("Mobile phone number")
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Contacts.PhoneNum)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.Contacts.ICQ, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Contacts.ICQ)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.Contacts.ICQ)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Contacts.ICQ)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.Location.Country, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Location.Country)
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.LabelFor(m => m.Contacts.Skype)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    @Html.DisplayFor(m => m.Contacts.Skype)
+                </div>
             </div>
         </div>
     </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.Location.City, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Location.City)
-            </div>
-        </div>
-    </div>
-    <div class="form-group form-inline">
-        @Html.LabelFor(m => m.Location.Address, new { @class = "col-sm-2 control-label" })
-        <div class="col-sm-10">
-            <div class="input-group">
-                @Html.DisplayFor(model => model.Location.Address)
-            </div>
-        </div>
-    </div>
-</fieldset>
+</div>

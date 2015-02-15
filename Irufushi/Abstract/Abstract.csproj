@@ -50,12 +50,10 @@
   <ItemGroup>
     <Compile Include="Abstract\IUserPagesRepository.cs" />
     <Compile Include="Entities\AboutUser.cs" />
-    <Compile Include="Entities\Album.cs" />
     <Compile Include="Entities\Contacts.cs" />
     <Compile Include="Entities\FriendShip.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Message.cs" />
-    <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Entities\webpages_Roles.cs" />
     <Compile Include="Entities\webpages_UsersInRoles.cs" />

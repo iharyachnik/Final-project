@@ -1,10 +1,4 @@
-﻿
-
-@Styles.Render("~/Content/bootstrap.min.css")
-@Styles.Render("~/Content/font-awesome.min.css")
-@Styles.Render("~/Content/Site.css")
-
-@if (Request.IsAuthenticated) { 
+﻿@if (Request.IsAuthenticated) { 
     <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Profile", "Index", "User", new { id = @WebSecurity.CurrentUserId },null)</li>
@@ -14,5 +8,5 @@
             <li>@Html.ActionLink("Search", "Search", "User", new { id = @WebSecurity.CurrentUserId }, null)</li>
             <li>@Html.ActionLink("Dialogs", "ShowDialogs", "User", new { id = @WebSecurity.CurrentUserId }, null)</li>
         </ul>
-    </div><!--/.nav-collapse -->
+    </div>
 }

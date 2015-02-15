@@ -1,13 +1,25 @@
 ﻿@model Irufushi.WebUI.Models.MessageModel
 
-<fieldset class="form-horizontal margin-login col-sm-offset-3 col-sm-10" id="UserInputs">
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+            <h2>Dialogs</h2>
+            <hr />
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-md-offset-3">
     @foreach (var item in Model.Dialogs)
     {
-
-        <div class="form-group form-inline">
-            @Html.ActionLink((item.FirstName + " " + item.LastName).ToString(),
-         "ShowMessages", "User", new { id = item.Id }, null)
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-8">
+                    @Html.ActionLink(item.FirstName + " " + item.LastName,
+        "ShowMessages", "User", new { id = item.Id }, null)
+                </div>
+            </div>
         </div>
-
+        <br />
     }
-</fieldset>
+</div>

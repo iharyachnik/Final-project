@@ -16,6 +16,8 @@ namespace Abstract.Entities
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         [HiddenInput(DisplayValue = false)]
         public int UserId { get; set; }
+
+        [Required]
         public string UserName { get; set; }
 
         public virtual AboutUser AboutUser { get; set; }
@@ -23,10 +25,6 @@ namespace Abstract.Entities
         public virtual Contacts Contacts { get; set; }
 
         public virtual Location Location { get; set; }
-
-        //public virtual ICollection<Album> Albums { get; set; }
-
-        public virtual Photo Photo { get; set; }
 
         public virtual ICollection<FriendShip> FriendshipsOwn { get; set; }
 

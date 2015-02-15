@@ -1,62 +1,46 @@
-﻿@Styles.Render("~/Content/bootstrap.min.css")
-@Styles.Render("~/Content/font-awesome.min.css")
-@Styles.Render("~/Content/Site.css")
-
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <title>Irufushi</title>
-        @*<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>*@
-    </head>
-
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irufushi</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+</head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"> @Html.ActionLink("Irufushi","Index","Home") </li>
+                    <li class="active"> @Html.ActionLink("Irufushi", "Index", "Home") </li>
                     <li>@Html.Partial("_MenuPartial")</li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <section id="login" class="navbar-form navbar-right">
                     @Html.Partial("_LoginPartial")
-                </section>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
-    </nav>
-
-    <div class="container">
+    </div>
+    <div class="container body-content">
         @RenderBody()
     </div>
-
     <footer class="footer">
         <div class="container">
-            <p class="text-muted">Place sticky footer content here.</p>
+            <div class="text-center">
+                <p class="text-muted">&copy; Irufushi, 2014</p>
+            </div>
         </div>
     </footer>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    @Scripts.Render("~/bundles/jquery")
+    
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
 </body>
-
 </html>
