@@ -28,23 +28,18 @@ namespace Irufushi.Domain.Concrete
             if (user == null) return;
             UserProfile dbUser = context.UserProfiles.Find(user.UserId);
 
-            if (dbUser != null)
-            {
-                AboutUser about = context.AboutUsers.Find(user.UserId);
-                if (about == null) user.AboutUser.Id = user.UserId;
-                Contacts contacts = context.Contacts.Find(user.UserId);
-                if (contacts == null) user.Contacts.Id = user.UserId;
-                Location location = context.Locations.Find(user.UserId);
-                if (location == null) user.Location.Id = user.UserId;
+            if (dbUser == null) return;
 
-                SaveAboutUser(user.AboutUser);
-                SaveContacts(user.Contacts);
-                SaveLocation(user.Location);
-            }
-            else
-            {
-                return;
-            }
+            AboutUser about = context.AboutUsers.Find(user.UserId);
+            if (about == null) user.AboutUser.Id = user.UserId;
+            Contacts contacts = context.Contacts.Find(user.UserId);
+            if (contacts == null) user.Contacts.Id = user.UserId;
+            Location location = context.Locations.Find(user.UserId);
+            if (location == null) user.Location.Id = user.UserId;
+
+            SaveAboutUser(user.AboutUser);
+            SaveContacts(user.Contacts);
+            SaveLocation(user.Location);
 
             context.SaveChanges();
         }
