@@ -1,0 +1,20 @@
+﻿@model Irufushi.WebUI.Models.MessageContentModel
+
+@if(Model.NewMessage != null)
+{ 
+<p>
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-9">
+                    @Model.NewMessage.Sender.AboutUser.FirstName :
+                    @Model.NewMessage.Content
+                </div>
+                <div class="col-md-3">
+                    @Model.NewMessage.SendDateTime
+                </div>
+            </div>
+        </div>
+    </div>
+</p>
+}

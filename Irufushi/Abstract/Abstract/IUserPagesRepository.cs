@@ -10,7 +10,6 @@ namespace Abstract.Abstract
     public interface IUserPagesRepository
     {
         IQueryable<UserProfile> UserProfiles { get; }
-        void SaveUser(UserProfile user);
         void SaveAboutUser(AboutUser about);
         void SaveContacts(Contacts contacts);
         void SaveLocation(Location location);

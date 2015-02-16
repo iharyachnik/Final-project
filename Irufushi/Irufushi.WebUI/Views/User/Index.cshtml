@@ -16,21 +16,11 @@
             <div class="col-md-6" id="button">
                 @if (ViewBag.TypeButton == true)
                 {
-                    @*@Ajax.ActionLink("Add to friends", "AddFriend", "User",
-                    new AjaxOptions
-                 {
-                     UpdateTargetId="button",
-                 })*@
                     @Html.ActionLink("Add to friends", "AddFriend", "User", 
         new { id = this.ViewContext.RouteData.Values["id"] }, null)
                 }
                 else
                 {
-                    @*@Ajax.ActionLink("Delete from friends", "DeleteFriend", "User",
-                    new AjaxOptions
-                 {
-                     UpdateTargetId="button",
-                 })*@
                     @Html.ActionLink("Delete from friends", "DeleteFriend", "User", 
         new { id = this.ViewContext.RouteData.Values["id"] }, null)
                 }

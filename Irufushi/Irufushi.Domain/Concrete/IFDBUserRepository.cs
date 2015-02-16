@@ -18,11 +18,6 @@ namespace Irufushi.Domain.Concrete
             get { return context.UserProfiles; }
         }
 
-        public void SaveUser(UserProfile user)
-        {
-            context.UserProfiles.Add(user);
-        }
-
         public UserProfile GetUser(int id)
         {
             return context.UserProfiles.First(m => m.UserId == id);
@@ -207,13 +202,13 @@ namespace Irufushi.Domain.Concrete
 
             if (firstName != null || lastName != null)
             {
-                searchRequest += " INNER JOIN AboutUsers ON UserProfile.UserId = AboutUsers.Id";
+                searchRequest += " LEFT JOIN AboutUsers ON UserProfile.UserId = AboutUsers.Id";
                 req = true;
                 
             }
             if (country != null || city != null)
             {
-                searchRequest += " INNER JOIN Locations ON UserProfile.UserId = Locations.Id";
+                searchRequest += " LEFT JOIN Locations ON UserProfile.UserId = Locations.Id";
                 req = true;
             }
             if (req)
@@ -319,9 +314,6 @@ namespace Irufushi.Domain.Concrete
 
             roleAdmin.RoleName = "Admin";
             roleUser.RoleName = "User";
-
-            if (context.webpages_Roles.Where(x => x.RoleName == "Admin").First() != null)
-                return;
 
             context.webpages_Roles.Add(roleAdmin);
             context.webpages_Roles.Add(roleUser);

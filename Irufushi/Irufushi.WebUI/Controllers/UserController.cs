@@ -156,29 +156,36 @@ namespace Irufushi.WebUI.Controllers
         [Authorize]
         public ActionResult ShowMessages(int? id)
         {
-            MessageModel viewModel = new MessageModel
+            MessageContentModel viewModel = new MessageContentModel
             {
                 Messages = _repository.GetMessages(WebSecurity.CurrentUserId, (int)id)
             };
-
-            if (Request.IsAjaxRequest())
-                return View(viewModel);
 
             return View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult ShowMessages(MessageModel model, int id)
+        public ActionResult ShowMessages(MessageContentModel model, int id)
         {
             Message message = new Message
             {
                 SendDateTime = DateTime.Now,
                 SenderId = WebSecurity.CurrentUserId,
                 ReceiverId = id,
-                Content = model.NewMessage.Content
+                Content = model.Content
             };
             _repository.AddMessage(message);
+
+            if (Request.IsAjaxRequest())
+            {
+                MessageContentModel viewModel = new MessageContentModel
+                {
+                    NewMessage = _repository.GetMessages(message.SenderId,message.ReceiverId).First()
+                };
+                viewModel.NewMessage.Sender = _repository.GetUser(WebSecurity.CurrentUserId);
+                return PartialView("ShowNewMessage", viewModel);
+            }
 
             return RedirectToAction("ShowMessages", "User", new { id = id });
         }
