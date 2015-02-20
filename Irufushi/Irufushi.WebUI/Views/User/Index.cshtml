@@ -4,34 +4,13 @@
     <div class="row">
         <div class="text-center">
             <h2>
-                @Html.DisplayFor(m => m.AboutUser.FirstName)
-                @Html.DisplayFor(m => m.AboutUser.LastName)
+                @Html.DisplayFor(m => m.FirstName)
+                @Html.DisplayFor(m => m.LastName)
             </h2>
             <hr />
         </div>
     </div>
-    @if (ViewBag.Button == true && Request.IsAuthenticated)
-    {
-        <div class="row">
-            <div class="col-md-6" id="button">
-                @if (ViewBag.TypeButton == true)
-                {
-                    @Html.ActionLink("Add to friends", "AddFriend", "User", 
-        new { id = this.ViewContext.RouteData.Values["id"] }, null)
-                }
-                else
-                {
-                    @Html.ActionLink("Delete from friends", "DeleteFriend", "User", 
-        new { id = this.ViewContext.RouteData.Values["id"] }, null)
-                }
-            </div>
-            <div class="col-md-6">
-                @Html.ActionLink("Send Message", "ShowMessages", "User",
-        new { id = this.ViewContext.RouteData.Values["id"] }, null)
-            </div>
-        </div>
-        <hr />
-    }
+    @Html.Action("Buttons", "User")
 </div>
 
 <div class="col-md-6 col-md-offset-3">
@@ -39,12 +18,12 @@
         <div class="form-horizontal">
             <div class="col-md-6">
                 <div class="form-horizontal">
-                    @Html.LabelFor(m => m.AboutUser.BirthDate)
+                    @Html.LabelFor(m => m.BirthDate)
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-horizontal">
-                    @Html.DisplayFor(m => m.AboutUser.BirthDate)
+                    @Html.DisplayFor(m => m.BirthDate)
                 </div>
             </div>
         </div>
@@ -53,12 +32,12 @@
         <div class="form-horizontal">
             <div class="col-md-6">
                 <div class="form-horizontal">
-                    @Html.LabelFor(m => m.AboutUser.Gender)
+                    @Html.LabelFor(m => m.Gender)
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-horizontal">
-                    @Html.DisplayFor(m => m.AboutUser.Gender)
+                    @Html.DisplayFor(m => m.Gender)
                 </div>
             </div>
         </div>

@@ -26,39 +26,31 @@ namespace Irufushi.Domain.Concrete
         public void SaveProfile(UserProfile user)
         {
             if (user == null) return;
-            UserProfile dbUser = context.UserProfiles.Find(user.UserId);
 
+            UserProfile dbUser = context.UserProfiles.Find(user.UserId);
             if (dbUser == null) return;
 
-            AboutUser about = context.AboutUsers.Find(user.UserId);
-            if (about == null) user.AboutUser.Id = user.UserId;
             Contacts contacts = context.Contacts.Find(user.UserId);
             if (contacts == null) user.Contacts.Id = user.UserId;
             Location location = context.Locations.Find(user.UserId);
             if (location == null) user.Location.Id = user.UserId;
 
-            SaveAboutUser(user.AboutUser);
+            SaveAboutUser(user);
             SaveContacts(user.Contacts);
             SaveLocation(user.Location);
 
             context.SaveChanges();
         }
 
-        public void SaveAboutUser(AboutUser about)
+        public void SaveAboutUser(UserProfile about)
         {
-            AboutUser dbAbout = context.AboutUsers.Find(about.Id);
+            UserProfile dbAbout = context.UserProfiles.Find(about.UserId);
 
-            if (dbAbout == null)
-            {
-                context.AboutUsers.Add(about);
-            }
-            else
-            {
-                dbAbout.FirstName = about.FirstName;
-                dbAbout.LastName = about.LastName;
-                dbAbout.BirthDate = about.BirthDate;
-                dbAbout.Gender = about.Gender;
-            }
+            dbAbout.FirstName = about.FirstName;
+            dbAbout.LastName = about.LastName;
+            dbAbout.BirthDate = about.BirthDate;
+            dbAbout.Gender = about.Gender;
+
             context.SaveChanges();
         }
 
@@ -190,61 +182,13 @@ namespace Irufushi.Domain.Concrete
         public List<UserProfile> SearchUsers(string firstName, string lastName,
             string country, string city)
         {
-            bool req = false;
-            bool and = false;
-            string searchRequest = "Select UserId from UserProfile";
-            string searchPattern = string.Empty;
 
-            if (firstName != null || lastName != null)
-            {
-                searchRequest += " LEFT JOIN AboutUsers ON UserProfile.UserId = AboutUsers.Id";
-                req = true;
-                
-            }
-            if (country != null || city != null)
-            {
-                searchRequest += " LEFT JOIN Locations ON UserProfile.UserId = Locations.Id";
-                req = true;
-            }
-            if (req)
-            {
-                searchRequest += " where ";
-            }
-                 
-            if (firstName != null)
-            {
-                searchPattern = "AboutUsers.FirstName LIKE '%" + firstName + "%'";
-                searchRequest += searchPattern;
-                and = true;
-            }
-            if (lastName != null)
-            {
-                if (and) searchRequest += " and ";
-                searchPattern = "AboutUsers.LastName LIKE '%" + lastName + "%'";
-                searchRequest += searchPattern;
-                and = true;
-            }
-            if (country != null)
-            {
-                if (and) searchRequest += " and ";
-                searchPattern = "Locations.Country LIKE '%" + country + "%'";
-                searchRequest += searchPattern;
-                and = true;
-            }
-            if (city != null)
-            {
-                if (and) searchRequest += " and ";
-                searchPattern = "Locations.City LIKE '%" + city + "%'";
-                searchRequest += searchPattern;
-            }
-
-            List<int> userIds = context.Database.SqlQuery<int>(searchRequest).ToList();
-            List<UserProfile> users = new List<UserProfile>();
-
-            foreach (var item in userIds)
-            {
-                users.Add(GetUser(item));
-            }
+            var users = context.UserProfiles
+                .Where(x => firstName == null || x.FirstName.Contains(firstName))
+                .Where(x => lastName == null || x.LastName.Contains(lastName))
+                .Where(x => country == null || x.Location.Country.Contains(country))
+                .Where(x => city == null || x.Location.City.Contains(city))
+                .ToList();
 
             return users;
         }
@@ -258,7 +202,7 @@ namespace Irufushi.Domain.Concrete
             return messages;
         }
 
-        public List<AboutUser> GetDialogs(int id)
+        public List<UserProfile> GetDialogs(int id)
         {
             var dialogsIn = context.Messages.Where(x => x.ReceiverId == id)
                 .OrderByDescending(x => x.SendDateTime);
@@ -277,19 +221,14 @@ namespace Irufushi.Domain.Concrete
             }
 
             List<UserProfile> up = new List<UserProfile>();
-            List<AboutUser> about = new List<AboutUser>();
 
             foreach (var item in users)
             {
                 up.Add(GetUser(item));
             }
             up = up.Distinct().ToList();
-            foreach (var item in up)
-            {
-                about.Add(item.AboutUser);
-            }
 
-            return about;           
+            return up;           
         }
 
         public void AddMessage(Message message)

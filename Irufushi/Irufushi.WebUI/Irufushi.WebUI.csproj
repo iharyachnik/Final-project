@@ -202,6 +202,7 @@
     </Compile>
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ButtonModel.cs" />
     <Compile Include="Models\MessageContentModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
@@ -332,6 +333,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ShowUser.cshtml" />
     <Content Include="Views\User\ShowNewMessage.cshtml" />
+    <Content Include="Views\User\Buttons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

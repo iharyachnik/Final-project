@@ -10,7 +10,7 @@ namespace Abstract.Abstract
     public interface IUserPagesRepository
     {
         IQueryable<UserProfile> UserProfiles { get; }
-        void SaveAboutUser(AboutUser about);
+        void SaveAboutUser(UserProfile about);
         void SaveContacts(Contacts contacts);
         void SaveLocation(Location location);
         UserProfile GetUser(int id);
@@ -22,7 +22,7 @@ namespace Abstract.Abstract
         List<UserProfile> SearchUsers(string firstName, string lastName,
             string country, string city);
         List<Message> GetMessages(int uId, int fId);
-        List<AboutUser> GetDialogs(int id);
+        List<UserProfile> GetDialogs(int id);
         void AddMessage(Message message);
         void AddRoles();
         void SetRole(int id);

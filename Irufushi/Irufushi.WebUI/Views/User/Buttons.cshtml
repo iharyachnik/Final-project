@@ -1,0 +1,13 @@
+﻿@model Irufushi.WebUI.Models.ButtonModel
+
+<div class="row">
+    <div class="col-md-6" id="button">
+            @Html.ActionLink(Model.Label, Model.Action, "User",
+        new { id = this.ViewContext.RouteData.Values["id"] }, null)
+    </div>
+    <div class="col-md-6">
+        @Html.ActionLink("Send Message", "ShowMessages", "User",
+        new { id = this.ViewContext.RouteData.Values["id"] }, null)
+    </div>
+</div>
+<hr />

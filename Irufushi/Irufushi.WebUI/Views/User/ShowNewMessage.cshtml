@@ -1,13 +1,11 @@
 ﻿@model Irufushi.WebUI.Models.MessageContentModel
 
-@if(Model.NewMessage != null)
-{ 
 <p>
     <div class="row">
         <div class="form-horizontal">
             <div class="row">
-                <div class="col-md-9">
-                    @Model.NewMessage.Sender.AboutUser.FirstName :
+                <div class="col-md-9" >
+                    @Model.NewMessage.Sender.FirstName :
                     @Model.NewMessage.Content
                 </div>
                 <div class="col-md-3">
@@ -17,4 +15,3 @@
         </div>
     </div>
 </p>
-}

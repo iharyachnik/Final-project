@@ -24,18 +24,28 @@ namespace Irufushi.WebUI.Controllers
         public ActionResult Index(int? id)
         {
             if(id == null) id = WebSecurity.CurrentUserId;
-            UserProfile user = _repository.GetUser((int)id);
 
-            if (id != WebSecurity.CurrentUserId)
+            UserProfile viewModel = _repository.GetUser((int)id);
+
+            return View(viewModel);
+        }
+
+        public ActionResult Buttons(int id)
+        {
+            if (id == WebSecurity.CurrentUserId) return null;
+            ButtonModel viewModel = new ButtonModel();
+            if (_repository.IsFriend(id, WebSecurity.CurrentUserId))
             {
-                ViewBag.Button = true;
-                if (_repository.IsFriend(WebSecurity.CurrentUserId, (int)id))
-                    ViewBag.TypeButton = false;
-                else ViewBag.TypeButton = true;
+                viewModel.Label = "Delete from friends";
+                viewModel.Action = "DeleteFriend";
             }
-            else ViewBag.Button = false;
-
-            return View(user);
+            else
+            {
+                viewModel.Label = "Add to friends";
+                viewModel.Action = "AddFriend";
+            }
+                
+            return PartialView(viewModel);
         }
 
         [Authorize]
@@ -52,7 +62,6 @@ namespace Irufushi.WebUI.Controllers
         public ActionResult Edit(UserProfile model, int? id)
         {
             if (id == null) id = WebSecurity.CurrentUserId;
-            if (model.AboutUser.Id == 0) model.AboutUser.Id = (int)id;
             if(model.UserId == 0) model.UserId = (int)id;
             if(model.Contacts.Id == 0) model.Contacts.Id = (int)id;
             if (model.Location.Id == 0) model.Location.Id = (int)id;
@@ -119,19 +128,6 @@ namespace Irufushi.WebUI.Controllers
         }
 
         [Authorize]
-        public ActionResult Search()
-        {
-            SearchModel model = new SearchModel
-            {
-                Users = _repository.SearchUsers(null, null, null, null)
-            };
-            model.Users = model.Users.Where(x => x.UserId != WebSecurity.CurrentUserId);
-
-            return View(model);
-        }
-
-        [Authorize]
-        [HttpPost]
         public ActionResult Search(SearchModel model)
         {
             model.Users = _repository.SearchUsers(model.FirstName, model.LastName, 
@@ -184,10 +180,16 @@ namespace Irufushi.WebUI.Controllers
                     NewMessage = _repository.GetMessages(message.SenderId,message.ReceiverId).First()
                 };
                 viewModel.NewMessage.Sender = _repository.GetUser(WebSecurity.CurrentUserId);
-                return PartialView("ShowNewMessage", viewModel);
+                return ShowNewMessage(viewModel);
             }
 
             return RedirectToAction("ShowMessages", "User", new { id = id });
+        }
+
+        public ActionResult ShowNewMessage(MessageContentModel message)
+        {
+            if (message.NewMessage == null) return null;
+            return PartialView("ShowNewMessage", message);
         }
     }
 }

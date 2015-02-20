@@ -17,7 +17,6 @@ namespace Irufushi.Domain.Concrete
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<AboutUser> AboutUsers { get; set; }
         public DbSet<Contacts> Contacts { get; set; }
         public DbSet<FriendShip> FriendShips { get; set; }
         public DbSet<Location> Locations { get; set; }
@@ -28,8 +27,6 @@ namespace Irufushi.Domain.Concrete
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<AboutUser>().HasRequired(x => x.UserProfile).WithOptional(x => x.AboutUser);
 
             modelBuilder.Entity<Contacts>().HasRequired(x => x.UserProfile).WithOptional(x => x.Contacts);
             modelBuilder.Entity<Location>().HasRequired(x => x.UserProfile).WithOptional(x => x.Location);

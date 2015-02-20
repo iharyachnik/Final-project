@@ -20,7 +20,14 @@ namespace Abstract.Entities
         [Required]
         public string UserName { get; set; }
 
-        public virtual AboutUser AboutUser { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? BirthDate { get; set; }
+
+        public bool? Gender { get; set; }
 
         public virtual Contacts Contacts { get; set; }
 

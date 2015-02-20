@@ -15,6 +15,8 @@ namespace Abstract.Entities
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
         [ForeignKey("Sender")]
