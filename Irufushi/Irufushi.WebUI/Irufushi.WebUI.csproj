@@ -333,7 +333,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ShowUser.cshtml" />
     <Content Include="Views\User\ShowNewMessage.cshtml" />
-    <Content Include="Views\User\Buttons.cshtml" />
+    <Content Include="Views\User\FriendButtons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

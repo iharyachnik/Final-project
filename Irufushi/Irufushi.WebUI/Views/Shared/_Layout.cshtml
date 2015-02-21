@@ -25,7 +25,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                    @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
     </footer>
-    
+
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
     @RenderSection("scripts", required: false)

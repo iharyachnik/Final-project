@@ -8,9 +8,9 @@ using Abstract.Entities;
 
 namespace Irufushi.Domain.Concrete
 {
-    public class EFDBContext: DbContext
+    public class EFDBContext : DbContext
     {
-                public EFDBContext()
+        public EFDBContext()
             : base("IFDB")
         {
             Configuration.LazyLoadingEnabled = true;

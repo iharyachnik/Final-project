@@ -23,14 +23,15 @@ namespace Irufushi.WebUI.Controllers
         [Authorize]
         public ActionResult Index(int? id)
         {
-            if(id == null) id = WebSecurity.CurrentUserId;
+            if (id == null) id = WebSecurity.CurrentUserId;
 
             UserProfile viewModel = _repository.GetUser((int)id);
 
             return View(viewModel);
         }
 
-        public ActionResult Buttons(int id)
+        [Authorize]
+        public ActionResult  FriendButtons(int id)
         {
             if (id == WebSecurity.CurrentUserId) return null;
             ButtonModel viewModel = new ButtonModel();
@@ -44,7 +45,7 @@ namespace Irufushi.WebUI.Controllers
                 viewModel.Label = "Add to friends";
                 viewModel.Action = "AddFriend";
             }
-                
+
             return PartialView(viewModel);
         }
 
@@ -62,8 +63,8 @@ namespace Irufushi.WebUI.Controllers
         public ActionResult Edit(UserProfile model, int? id)
         {
             if (id == null) id = WebSecurity.CurrentUserId;
-            if(model.UserId == 0) model.UserId = (int)id;
-            if(model.Contacts.Id == 0) model.Contacts.Id = (int)id;
+            if (model.UserId == 0) model.UserId = (int)id;
+            if (model.Contacts.Id == 0) model.Contacts.Id = (int)id;
             if (model.Location.Id == 0) model.Location.Id = (int)id;
 
             _repository.SaveProfile(model);
@@ -102,7 +103,7 @@ namespace Irufushi.WebUI.Controllers
         [Authorize]
         public ActionResult ShowFriends(int? id)
         {
-            if(id == null) id = WebSecurity.CurrentUserId;
+            if (id == null) id = WebSecurity.CurrentUserId;
 
             UserModel viewModel = new UserModel
             {
@@ -130,7 +131,7 @@ namespace Irufushi.WebUI.Controllers
         [Authorize]
         public ActionResult Search(SearchModel model)
         {
-            model.Users = _repository.SearchUsers(model.FirstName, model.LastName, 
+            model.Users = _repository.SearchUsers(model.FirstName, model.LastName,
                 model.Country, model.City);
 
             model.Users = model.Users.Where(x => x.UserId != WebSecurity.CurrentUserId);
@@ -177,7 +178,7 @@ namespace Irufushi.WebUI.Controllers
             {
                 MessageContentModel viewModel = new MessageContentModel
                 {
-                    NewMessage = _repository.GetMessages(message.SenderId,message.ReceiverId).First()
+                    NewMessage = _repository.GetMessages(message.SenderId, message.ReceiverId).First()
                 };
                 viewModel.NewMessage.Sender = _repository.GetUser(WebSecurity.CurrentUserId);
                 return ShowNewMessage(viewModel);

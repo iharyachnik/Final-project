@@ -92,7 +92,7 @@ namespace Irufushi.Domain.Concrete
 
         public void AddFriend(FriendShip friendship)
         {
-            if (friendship.UserId == 0 || friendship.FriendId == 0 
+            if (friendship.UserId == 0 || friendship.FriendId == 0
                 || friendship.UserId == friendship.FriendId) return;
 
             var dbFriendshipsUserId = context.FriendShips
@@ -124,8 +124,8 @@ namespace Irufushi.Domain.Concrete
                 .Where(x => x.FriendId == friendship.UserId)
                 .Where(x => x.UserId == friendship.FriendId).FirstOrDefault();
 
-            if(friendshipQueryUID != null) context.FriendShips.Remove(friendshipQueryUID);
-            if(friendshipQueryFID != null) context.FriendShips.Remove(friendshipQueryFID);
+            if (friendshipQueryUID != null) context.FriendShips.Remove(friendshipQueryUID);
+            if (friendshipQueryFID != null) context.FriendShips.Remove(friendshipQueryFID);
 
             context.SaveChanges();
         }
@@ -133,7 +133,7 @@ namespace Irufushi.Domain.Concrete
         public List<UserProfile> GetFriends(int id)
         {
             var userIds = context.FriendShips.Where(x => x.UserId == id);
-            var friendIds = context.FriendShips.Where(x=> x.FriendId == id);
+            var friendIds = context.FriendShips.Where(x => x.FriendId == id);
 
             List<int> friendshipList = new List<int>();
             foreach (var item in userIds)
@@ -228,7 +228,7 @@ namespace Irufushi.Domain.Concrete
             }
             up = up.Distinct().ToList();
 
-            return up;           
+            return up;
         }
 
         public void AddMessage(Message message)

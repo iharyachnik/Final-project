@@ -11,7 +11,7 @@ using Irufushi.Domain.Concrete;
 
 namespace Irufushi.WebUI.Infrastructure
 {
-    public class NinjectControllerFactory: DefaultControllerFactory
+    public class NinjectControllerFactory : DefaultControllerFactory
     {
         private IKernel ninjectKernel;
 
