@@ -95,18 +95,11 @@ namespace Irufushi.Domain.Concrete
             if (friendship.UserId == 0 || friendship.FriendId == 0
                 || friendship.UserId == friendship.FriendId) return;
 
-            var dbFriendshipsUserId = context.FriendShips
-                .Where(x => x.UserId == friendship.UserId);
-            foreach (var item in dbFriendshipsUserId)
-            {
-                if (item.FriendId == friendship.FriendId) return;
-            }
-            var dbFriendshipsFriendId = context.FriendShips
-                .Where(x => x.FriendId == friendship.FriendId);
-            foreach (var item in dbFriendshipsFriendId)
-            {
-                if (item.UserId == friendship.UserId) return;
-            }
+            var dbFrinedships = context.FriendShips
+                .Where(x => x.UserId == friendship.UserId && x.FriendId == friendship.FriendId
+                || x.UserId == friendship.FriendId && x.FriendId == friendship.UserId).FirstOrDefault();
+
+            if (dbFrinedships != null) return;
 
             context.FriendShips.Add(friendship);
             context.SaveChanges();
@@ -114,28 +107,28 @@ namespace Irufushi.Domain.Concrete
 
         public void DeleteFriend(FriendShip friendship)
         {
-            if (friendship.UserId == 0 || friendship.FriendId == 0) return;
+            if (friendship.UserId == 0 || friendship.FriendId == 0
+                || friendship.UserId == friendship.FriendId) return;
 
-            var friendshipQueryUID = context.FriendShips
-                .Where(x => x.UserId == friendship.UserId)
-                .Where(x => x.FriendId == friendship.FriendId).FirstOrDefault();
+            var dbFrinedships = context.FriendShips
+                .Where(x => x.UserId == friendship.UserId && x.FriendId == friendship.FriendId
+                || x.UserId == friendship.FriendId && x.FriendId == friendship.UserId).FirstOrDefault();
 
-            var friendshipQueryFID = context.FriendShips
-                .Where(x => x.FriendId == friendship.UserId)
-                .Where(x => x.UserId == friendship.FriendId).FirstOrDefault();
+            if (dbFrinedships == null) return;
 
-            if (friendshipQueryUID != null) context.FriendShips.Remove(friendshipQueryUID);
-            if (friendshipQueryFID != null) context.FriendShips.Remove(friendshipQueryFID);
-
+            context.FriendShips.Remove(dbFrinedships);
             context.SaveChanges();
         }
 
         public List<UserProfile> GetFriends(int id)
         {
-            var userIds = context.FriendShips.Where(x => x.UserId == id);
-            var friendIds = context.FriendShips.Where(x => x.FriendId == id);
+            var userIds = context.FriendShips
+                .Where(x => x.UserId == id);
+            var friendIds = context.FriendShips
+                .Where(x => x.FriendId == id);
 
             List<int> friendshipList = new List<int>();
+
             foreach (var item in userIds)
             {
                 friendshipList.Add(item.FriendId);
@@ -146,6 +139,7 @@ namespace Irufushi.Domain.Concrete
             }
 
             List<UserProfile> users = new List<UserProfile>();
+
             foreach (var item in friendshipList)
             {
                 users.Add(GetUser(item));
@@ -156,79 +150,59 @@ namespace Irufushi.Domain.Concrete
 
         public bool IsFriend(int idUser, int idFriend)
         {
-            if (idUser == 0 || idFriend == 0) return false;
+            if (idUser == 0 || idFriend == 0
+                || idUser == idFriend) return false;
 
-            var friendshipUID = context.FriendShips.Where(x => x.UserId == idUser)
-                .Where(x => x.FriendId == idFriend);
+            var dbFriendships = context.FriendShips
+                .Where(x => x.UserId == idUser && x.FriendId == idFriend
+                || x.UserId == idFriend && x.FriendId == idUser).FirstOrDefault();
 
-            foreach (var item in friendshipUID)
-            {
-                if (item.UserId == idUser && item.FriendId == idFriend)
-                    return true;
-            }
+            if (dbFriendships == null) return false;
 
-            var friendshipFID = context.FriendShips.Where(x => x.FriendId == idUser)
-                .Where(x => x.UserId == idFriend);
-
-            foreach (var item in friendshipFID)
-            {
-                if (item.UserId == idFriend && item.FriendId == idUser)
-                    return true;
-            }
-
-            return false;
+            return true;
         }
 
         public List<UserProfile> SearchUsers(string firstName, string lastName,
             string country, string city)
         {
-
-            var users = context.UserProfiles
+            return context.UserProfiles
                 .Where(x => firstName == null || x.FirstName.Contains(firstName))
                 .Where(x => lastName == null || x.LastName.Contains(lastName))
                 .Where(x => country == null || x.Location.Country.Contains(country))
                 .Where(x => city == null || x.Location.City.Contains(city))
                 .ToList();
-
-            return users;
         }
 
         public List<Message> GetMessages(int uId, int fId)
         {
-            List<Message> messages = context.Messages
+            return context.Messages
                 .Where(x => (x.ReceiverId == uId && x.SenderId == fId || x.SenderId == uId && x.ReceiverId == fId))
                 .OrderByDescending(x => x.SendDateTime).ToList();
-
-            return messages;
         }
 
         public List<UserProfile> GetDialogs(int id)
         {
             var dialogsIn = context.Messages.Where(x => x.ReceiverId == id)
-                .OrderByDescending(x => x.SendDateTime);
+                .OrderByDescending(x => x.SendDateTime)
+                .Select(x => x.Sender)
+                .ToList();
             var dialogsOut = context.Messages.Where(x => x.SenderId == id)
-                .OrderByDescending(x => x.SendDateTime);
+                .OrderByDescending(x => x.SendDateTime)
+                .Select(x => x.Receiver)
+                .ToList();
 
-            List<int> users = new List<int>();
+            List<UserProfile> users = new List<UserProfile>();
 
             foreach (var item in dialogsIn)
             {
-                users.Add(item.SenderId);
+                users.Add(item);
             }
             foreach (var item in dialogsOut)
             {
-                users.Add(item.ReceiverId);
+                users.Add(item);
             }
 
-            List<UserProfile> up = new List<UserProfile>();
-
-            foreach (var item in users)
-            {
-                up.Add(GetUser(item));
-            }
-            up = up.Distinct().ToList();
-
-            return up;
+            return users.Distinct().ToList();
         }
 
         public void AddMessage(Message message)

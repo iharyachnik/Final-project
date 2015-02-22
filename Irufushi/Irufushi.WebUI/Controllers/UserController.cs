@@ -31,7 +31,7 @@ namespace Irufushi.WebUI.Controllers
         }
 
         [Authorize]
-        public ActionResult  FriendButtons(int id)
+        public ActionResult FriendButtons(int id)
         {
             if (id == WebSecurity.CurrentUserId) return null;
             ButtonModel viewModel = new ButtonModel();

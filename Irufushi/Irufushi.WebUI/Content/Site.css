@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 60px;
     padding-bottom: 30px;
+    margin-bottom: 60px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -46,10 +47,6 @@ input[type="checkbox"].input-validation-error {
 html {
   position: relative;
   min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
 }
 .footer {
   position: absolute;

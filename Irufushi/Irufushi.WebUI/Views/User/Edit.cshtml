@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-horizontal">
-                        @Html.TextBoxFor(m => m.BirthDate)
+                        @Html.EditorFor(m => m.BirthDate)
                     </div>
                 </div>
             </div>
@@ -60,12 +60,12 @@
             <div class="form-horizontal">
                 <div class="col-md-6">
                     <div class="form-horizontal">
-                        @Html.LabelFor(m => m.Gender)
+                        @Html.Label("Are you man?")
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-horizontal">
-                        @Html.TextBoxFor(m => m.Gender)
+                        @Html.EditorFor(m => m.Gender)
                     </div>
                 </div>
             </div>
